@@ -1,0 +1,21 @@
+data/
+*.csv
+outputs/
+__pycache__/
+*.py[cod]
+venv/
+env/
+.venv/
+.ipynb_checkpoints/
+.DS_Store
+
+git init
+git add README.md requirements.txt .gitignore fraud_detection_project.ipynb 
+git commit -m "Initial commit: cost-sensitive fraud detection pipeline"
+git remote add origin https://github.com/datawitholoye/fraud-detection-fintech.git
+git branch -M main
+git push -u origin main
+git status
+
+git remote -v
+
