@@ -1,0 +1,98 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Fraud detection pipeline config. Every number that drives a business
+# decision lives here, so it can be challenged and changed in one place.
+# ─────────────────────────────────────────────────────────────────────────────
+seed: 42
+
+data:
+  raw_dir: data
+  transaction_file: train_transaction.csv
+  identity_file: train_identity.csv
+
+# Time-based split on TransactionDT (no shuffling).
+#   train:      first 70% of the timeline  -> fit the model
+#   validation: next 10%                   -> early stopping + choose thresholds
+#   test:       last 20% (~1 month)        -> reported once, never tuned on
+split:
+  train_end_quantile: 0.70
+  val_end_quantile: 0.80
+
+features:
+  drop_missing_above: 0.80   # computed on TRAIN only
+
+# Cost model (currency units of TransactionAmt; treated as £ for a UK framing).
+#   Missed fraud     = transaction amount lost + chargeback/ops fee
+#   Blocked customer = fixed friction cost (support contact, abandoned purchase, churn risk)
+costs:
+  fp_cost: 30
+  fn_fee: 15
+  sensitivity:
+    fp_cost: [10, 30, 60, 100]
+    fn_fee: [0, 15, 30]
+
+model:
+  n_estimators: 3000          # upper bound; early stopping on validation picks the real number
+  learning_rate: 0.03
+  num_leaves: 63
+  max_depth: -1
+  min_child_samples: 50
+  subsample: 0.8
+  subsample_freq: 1
+  colsample_bytree: 0.6
+  reg_alpha: 0.1
+  reg_lambda: 1.0
+  early_stopping_rounds: 150
+
+thresholds:
+  grid_start: 0.01
+  grid_stop: 0.99
+  grid_step: 0.01
+
+# A rules engine written the way a fraud analyst would write one: simple,
+# explainable conditions. Thresholds were set by hand BEFORE looking at the test
+# month. The only thing tuned is k (how many rules must fire to block), and that
+# is chosen on the validation month with the same cost function as the model.
+rules:
+  - name: high_value
+    description: Transaction over 1,000
+    conditions:
+      - {col: TransactionAmt, op: gt, value: 1000}
+  - name: new_card_high_value
+    description: Card first seen within the last day and amount over 300
+    conditions:
+      - {col: D1, op: le, value: 1}
+      - {col: TransactionAmt, op: gt, value: 300}
+  - name: email_mismatch
+    description: Purchaser and recipient email domains both present but different
+    conditions:
+      - {col: P_emaildomain, op: notnull}
+      - {col: R_emaildomain, op: notnull}
+      - {col: P_emaildomain, op: ne_col, value: R_emaildomain}
+  - name: anonymous_email
+    description: Purchaser uses an anonymous / privacy email provider
+    conditions:
+      - {col: P_emaildomain, op: in, value: [anonymous.com, protonmail.com, mail.com, aim.com]}
+  - name: many_addresses_on_card
+    description: Card linked to an unusually high number of addresses (C1 > 20)
+    conditions:
+      - {col: C1, op: gt, value: 20}
+  - name: no_billing_address
+    description: No billing address and amount over 100
+    conditions:
+      - {col: addr1, op: isnull}
+      - {col: TransactionAmt, op: gt, value: 100}
+  - name: night_high_value
+    description: Between midnight and 5am with amount over 500
+    conditions:
+      - {col: hour_of_day, op: le, value: 5}
+      - {col: TransactionAmt, op: gt, value: 500}
+
+experiment:
+  alpha: 0.05
+  power: 0.80
+  relative_mde: 0.10          # detect a 10% relative change
+  traffic_share_per_arm: 0.50
+
+paths:
+  artefacts_dir: artefacts
+  reports_dir: reports

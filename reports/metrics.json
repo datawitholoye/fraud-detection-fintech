@@ -1,0 +1,295 @@
+{
+  "version": "2.0.0",
+  "trained_at": "2026-11-16T16:24:44+00:00",
+  "rows": {
+    "train": 413378,
+    "validation": 59054,
+    "test": 118108
+  },
+  "test_period_days": 41.87767361111111,
+  "costs": {
+    "fp_cost": 30,
+    "fn_fee": 15
+  },
+  "n_features": 369,
+  "n_trees": 2990,
+  "rules_k": 2,
+  "model_threshold": 0.31,
+  "test_raw": {
+    "rules": {
+      "transactions": 118108,
+      "tp": 201,
+      "fp": 2984,
+      "fn": 3863,
+      "tn": 111060,
+      "recall": 0.04945866141732284,
+      "value_detection_rate": 0.20863808667952516,
+      "precision": 0.0631083202511774,
+      "legit_block_rate": 0.02616533969345165,
+      "alerts_per_1k": 26.966843905577946,
+      "fraud_value_total": 609934.3356752396,
+      "fraud_value_caught": 127255.53279542923,
+      "cost_missed_fraud": 540623.8028798103,
+      "cost_blocked_customers": 89520.0,
+      "total_cost": 630143.8028798103
+    },
+    "model_default": {
+      "transactions": 118108,
+      "tp": 1976,
+      "fp": 1717,
+      "fn": 2088,
+      "tn": 112327,
+      "recall": 0.4862204724409449,
+      "value_detection_rate": 0.44085907002368907,
+      "precision": 0.5350663417275927,
+      "legit_block_rate": 0.015055592578303112,
+      "alerts_per_1k": 31.26799200731534,
+      "fraud_value_total": 609934.3356752396,
+      "fraud_value_caught": 268895.0840013027,
+      "cost_missed_fraud": 372359.25167393684,
+      "cost_blocked_customers": 51510.0,
+      "total_cost": 423869.25167393684
+    },
+    "model_tuned": {
+      "transactions": 118108,
+      "tp": 2368,
+      "fp": 4069,
+      "fn": 1696,
+      "tn": 109975,
+      "recall": 0.5826771653543307,
+      "value_detection_rate": 0.5724131659076407,
+      "precision": 0.3678732328724561,
+      "legit_block_rate": 0.03567921153239101,
+      "alerts_per_1k": 54.5009652182748,
+      "fraud_value_total": 609934.3356752396,
+      "fraud_value_caught": 349134.4440796375,
+      "cost_missed_fraud": 286239.89159560204,
+      "cost_blocked_customers": 122070.0,
+      "total_cost": 408309.89159560204
+    }
+  },
+  "test_30d": {
+    "rules": {
+      "transactions": 84609.28448183656,
+      "tp": 143.99080655712694,
+      "fp": 2137.654561027198,
+      "fn": 2767.345700150156,
+      "tn": 79560.29341410208,
+      "recall": 0.04945866141732284,
+      "value_detection_rate": 0.20863808667952516,
+      "precision": 0.0631083202511774,
+      "legit_block_rate": 0.02616533969345165,
+      "alerts_per_1k": 26.966843905577946,
+      "fraud_value_total": 436939.9847799162,
+      "fraud_value_caught": 91162.32241826256,
+      "cost_missed_fraud": 387287.84786390595,
+      "cost_blocked_customers": 64129.636830815936,
+      "total_cost": 451417.4846947219
+    },
+    "model_default": {
+      "transactions": 84609.28448183656,
+      "tp": 1415.5514117257853,
+      "fp": 1230.01101919695,
+      "fn": 1495.7850949814977,
+      "tn": 80467.93695593232,
+      "recall": 0.4862204724409449,
+      "value_detection_rate": 0.44085907002368907,
+      "precision": 0.5350663417275927,
+      "legit_block_rate": 0.015055592578303112,
+      "alerts_per_1k": 31.26799200731534,
+      "fraud_value_total": 436939.9847799162,
+      "fraud_value_caught": 192628.9553462387,
+      "cost_missed_fraud": 266747.80585839995,
+      "cost_blocked_customers": 36900.3305759085,
+      "total_cost": 303648.1364343084
+    },
+    "model_tuned": {
+      "transactions": 84609.28448183656,
+      "tp": 1696.369303120779,
+      "fp": 2914.918367566913,
+      "fn": 1214.967203586504,
+      "tn": 78783.02960756236,
+      "recall": 0.5826771653543307,
+      "value_detection_rate": 0.5724131659076407,
+      "precision": 0.3678732328724561,
+      "legit_block_rate": 0.03567921153239101,
+      "alerts_per_1k": 54.5009652182748,
+      "fraud_value_total": 436939.9847799162,
+      "fraud_value_caught": 250110.19999950816,
+      "cost_missed_fraud": 205054.29283420555,
+      "cost_blocked_customers": 87447.55102700739,
+      "total_cost": 292501.84386121295
+    }
+  },
+  "ranking": {
+    "model_all": {
+      "roc_auc": 0.8938005943347739,
+      "pr_auc": 0.5254442830360927
+    },
+    "model_seen_cards": {
+      "roc_auc": 0.8932792549125801,
+      "pr_auc": 0.5227334039191016
+    },
+    "model_unseen_cards": {
+      "roc_auc": 0.9027829750993878,
+      "pr_auc": 0.5694236759223881
+    },
+    "logistic": {
+      "roc_auc": 0.8257296961740419,
+      "pr_auc": 0.17237173631371552
+    }
+  },
+  "unseen_card_share": 0.0583449046635283,
+  "rules_on_train": [
+    {
+      "rule": "high_value",
+      "description": "Transaction over 1,000",
+      "hit_rate": 0.011689059408096222,
+      "precision": 0.021316225165562915,
+      "fraud_caught_share": 0.007084881001513276
+    },
+    {
+      "rule": "new_card_high_value",
+      "description": "Card first seen within the last day and amount over 300",
+      "hit_rate": 0.0525572236548631,
+      "precision": 0.04303599374021909,
+      "fraud_caught_share": 0.06431421103315449
+    },
+    {
+      "rule": "email_mismatch",
+      "description": "Purchaser and recipient email domains both present but different",
+      "hit_rate": 0.04516447416166317,
+      "precision": 0.026888055704338512,
+      "fraud_caught_share": 0.034530196725821985
+    },
+    {
+      "rule": "anonymous_email",
+      "description": "Purchaser uses an anonymous / privacy email provider",
+      "hit_rate": 0.06637508527304307,
+      "precision": 0.028209053137983817,
+      "fraud_caught_share": 0.05323978539001238
+    },
+    {
+      "rule": "many_addresses_on_card",
+      "description": "Card linked to an unusually high number of addresses (C1 > 20)",
+      "hit_rate": 0.05065097803946993,
+      "precision": 0.08262489253987965,
+      "fraud_caught_share": 0.11899848672444628
+    },
+    {
+      "rule": "no_billing_address",
+      "description": "No billing address and amount over 100",
+      "hit_rate": 0.008505532466652798,
+      "precision": 0.13822525597269625,
+      "fraud_caught_share": 0.03342963268675196
+    },
+    {
+      "rule": "night_high_value",
+      "description": "Between midnight and 5am with amount over 500",
+      "hit_rate": 0.006843615286735143,
+      "precision": 0.0335807705903146,
+      "fraud_caught_share": 0.006534598981978263
+    }
+  ],
+  "sensitivity": [
+    {
+      "fp_cost": 10,
+      "fn_fee": 0,
+      "rules_k": 1,
+      "model_threshold": 0.11,
+      "saving_30d": 168419.2003653029
+    },
+    {
+      "fp_cost": 10,
+      "fn_fee": 15,
+      "rules_k": 1,
+      "model_threshold": 0.1,
+      "saving_30d": 187740.13254834764
+    },
+    {
+      "fp_cost": 10,
+      "fn_fee": 30,
+      "rules_k": 1,
+      "model_threshold": 0.1,
+      "saving_30d": 208973.4037242344
+    },
+    {
+      "fp_cost": 30,
+      "fn_fee": 0,
+      "rules_k": 2,
+      "model_threshold": 0.31,
+      "saving_30d": 135629.96338505414
+    },
+    {
+      "fp_cost": 30,
+      "fn_fee": 15,
+      "rules_k": 2,
+      "model_threshold": 0.31,
+      "saving_30d": 158915.64083350895
+    },
+    {
+      "fp_cost": 30,
+      "fn_fee": 30,
+      "rules_k": 2,
+      "model_threshold": 0.31,
+      "saving_30d": 182201.31828196373
+    },
+    {
+      "fp_cost": 60,
+      "fn_fee": 0,
+      "rules_k": 5,
+      "model_threshold": 0.52,
+      "saving_30d": 119975.57926331299
+    },
+    {
+      "fp_cost": 60,
+      "fn_fee": 15,
+      "rules_k": 5,
+      "model_threshold": 0.52,
+      "saving_30d": 140811.26388378083
+    },
+    {
+      "fp_cost": 60,
+      "fn_fee": 30,
+      "rules_k": 5,
+      "model_threshold": 0.4,
+      "saving_30d": 152713.01530728972
+    },
+    {
+      "fp_cost": 100,
+      "fn_fee": 0,
+      "rules_k": 5,
+      "model_threshold": 0.64,
+      "saving_30d": 92238.1337394003
+    },
+    {
+      "fp_cost": 100,
+      "fn_fee": 15,
+      "rules_k": 5,
+      "model_threshold": 0.55,
+      "saving_30d": 102603.22241152906
+    },
+    {
+      "fp_cost": 100,
+      "fn_fee": 30,
+      "rules_k": 5,
+      "model_threshold": 0.55,
+      "saving_30d": 123019.8293114202
+    }
+  ],
+  "drift": {
+    "score_psi": 0.002714073673063324,
+    "score_status": "stable",
+    "amount_psi": 0.005507167558213,
+    "amount_status": "stable"
+  },
+  "experiment": {
+    "baseline_loss_per_txn": 4.577368195886903,
+    "baseline_legit_block_rate": 0.02616533969345165,
+    "relative_mde": 0.1,
+    "n_per_arm_loss": 126396,
+    "n_per_arm_block_rate": 55577,
+    "days_needed_loss": 89.63271639093034,
+    "days_needed_block_rate": 39.411986762704004
+  }
+}

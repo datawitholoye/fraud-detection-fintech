@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: pip install -r requirements-dev.txt && pip install -e .
+      - name: Lint
+        run: ruff check .
+      - name: Tests (synthetic data, full pipeline + API)
+        run: pytest -q
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Train a model on synthetic data so the image has something to serve
+        run: |
+          pip install -r requirements.txt && pip install -e .
+          python scripts/make_sample_data.py --out data/sample --rows 20000
+          python -m fraud.pipeline --data-dir data/sample --skip-logistic --shap-sample 0
+      - name: Build image
+        run: docker build -t fraud-api .
+      - name: Smoke test the running container
+        run: |
+          docker run -d -p 8000:8000 --name api fraud-api
+          for i in $(seq 1 20); do curl -sf localhost:8000/health && break; sleep 1; done
+          curl -sf -X POST localhost:8000/score -H 'Content-Type: application/json' \
+            -d '{"transaction": {"TransactionAmt": 1250.0, "ProductCD": "C", "P_emaildomain": "protonmail.com"}}'

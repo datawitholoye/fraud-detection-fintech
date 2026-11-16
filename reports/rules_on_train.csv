@@ -1,0 +1,8 @@
+rule,description,hit_rate,precision,fraud_caught_share
+high_value,"Transaction over 1,000",0.011689059408096222,0.021316225165562915,0.007084881001513276
+new_card_high_value,Card first seen within the last day and amount over 300,0.0525572236548631,0.04303599374021909,0.06431421103315449
+email_mismatch,Purchaser and recipient email domains both present but different,0.04516447416166317,0.026888055704338512,0.034530196725821985
+anonymous_email,Purchaser uses an anonymous / privacy email provider,0.06637508527304307,0.028209053137983817,0.05323978539001238
+many_addresses_on_card,Card linked to an unusually high number of addresses (C1 > 20),0.05065097803946993,0.08262489253987965,0.11899848672444628
+no_billing_address,No billing address and amount over 100,0.008505532466652798,0.13822525597269625,0.03342963268675196
+night_high_value,Between midnight and 5am with amount over 500,0.006843615286735143,0.0335807705903146,0.006534598981978263
