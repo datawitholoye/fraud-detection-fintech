@@ -1,4 +1,6 @@
 # Fraud detection: does ML actually beat the rules?
+[![CI](https://github.com/datawitholoye/fraud-detection-fintech/actions/workflows/ci.yml/badge.svg)](https://github.com/datawitholoye/fraud-detection-fintech/actions/workflows/ci.yml)
+
 
 A cost-based, leakage-aware comparison of a hand-written rules engine and a LightGBM model on 590,540 real card transactions (IEEE-CIS), with a scoring API, a rollout plan and an A/B test design.
 
